@@ -1,5 +1,7 @@
 #include <iostream>
 #include <enet/enet.h>
+#include "exploot-protobuf/build/Message.pb.h"
+#include "exploot-protobuf/build/Connect.pb.h"
 #include "config.h"
 
 using namespace std;
@@ -22,30 +24,39 @@ int main(int argc, char** argv){
         cout << "An error occurred while trying to create an ENet server host." << endl;
         exit (EXIT_FAILURE);
     }
+
+    std::cout << "Listening on port " << UDP_PORT << "..." << std::endl;
     ENetEvent event;
     /* Wait up to 1000 milliseconds for an event. */
-    while (enet_host_service (server, & event, 1000) >= 0)
+    while (enet_host_service (server, &event, 1000) >= 0)
     {
-        switch (event.type)
+        
+        if(event.type == ENET_EVENT_TYPE_CONNECT)
         {
-        case ENET_EVENT_TYPE_CONNECT:
             cout << "A new client connected from "
                  << event.peer->address.host << ":"
                  << event.peer -> address.port << endl;
-            /* Store any relevant client information here. */
-            //event.peer->data = "Client information";
-            break;
-        case ENET_EVENT_TYPE_RECEIVE:
-            cout << "A packet of length "<< event.packet -> dataLength << " containing "
-                 << event.packet->data << " was received from "
-                 << event.peer->data << " on channel "
-                 << event.channelID << endl;
+        }else if(event.type == ENET_EVENT_TYPE_RECEIVE){
+            Message msg;
+            msg.ParseFromString((char*)event.packet->data);
+            if(msg.message().size() > 0){
+                Message::MessageData msgData = msg.message().Get(0);
+                if(msgData.type() == Message::CONNECT){
+                    Connect con;
+                    if(con.ParseFromString(msgData.data())){
+                        std::cout << "User " << con.nickname() << " tries to log in with password " << con.passhash() << std::endl; 
+                    }else{
+                        std::cout << "Invalid message data string" << std::endl;
+                    }
+                }else{
+                    std::cout << "Message type not handled yet." << std::endl;
+                }
+            }else{
+                std::cout << "Not enough parameters" << std::endl;
+            }
             /* Clean up the packet now that we're done using it. */
             enet_packet_destroy (event.packet);
-
-            break;
-
-        case ENET_EVENT_TYPE_DISCONNECT:
+        }else if(event.type == ENET_EVENT_TYPE_DISCONNECT){
             cout << event.peer -> data << " disconected." << endl;
             /* Reset the peer's client information. */
             event.peer -> data = NULL;

@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\submodules\exploot-protobuf\build\Message.pb.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\submodules\exploot-protobuf\build\Connect.pb.cc">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{5413f8c9-fdae-4ed7-8b90-7f918f80ecf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{74e7a2bf-fe49-4e68-a4ea-0f840632bccd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\config.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\submodules\exploot-protobuf\build\Connect.pb.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\submodules\exploot-protobuf\build\Message.pb.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\submodules\exploot-protobuf\Connect.proto">
+      <Filter>include</Filter>
+    </None>
+    <None Include="..\submodules\exploot-protobuf\Message.proto">
+      <Filter>include</Filter>
+    </None>
+  </ItemGroup>
+</Project>
