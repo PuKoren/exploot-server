@@ -82,16 +82,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\Database.cpp" />
+    <ClCompile Include="..\src\DatabaseManager.cpp" />
     <ClCompile Include="..\src\Login.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\MessageManager.cpp" />
+    <ClCompile Include="..\src\NetworkManager.cpp" />
     <ClCompile Include="..\submodules\exploot-protobuf\build\Connect.pb.cc" />
     <ClCompile Include="..\submodules\exploot-protobuf\build\Message.pb.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\config.h" />
-    <ClInclude Include="..\include\Database.h" />
+    <ClInclude Include="..\include\DatabaseManager.h" />
     <ClInclude Include="..\include\Login.h" />
+    <ClInclude Include="..\include\MessageManager.h" />
+    <ClInclude Include="..\include\NetworkManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\submodules\exploot-protobuf\Connect.proto" />

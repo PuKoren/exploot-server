@@ -4,16 +4,22 @@
     <ClCompile Include="..\src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\Database.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\submodules\exploot-protobuf\build\Connect.pb.cc">
       <Filter>protobuf</Filter>
     </ClCompile>
     <ClCompile Include="..\submodules\exploot-protobuf\build\Message.pb.cc">
       <Filter>protobuf</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\NetworkManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\DatabaseManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\Login.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\MessageManager.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -35,10 +41,16 @@
     <ClInclude Include="..\include\config.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\Database.h">
+    <ClInclude Include="..\include\NetworkManager.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\DatabaseManager.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\Login.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\MessageManager.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
