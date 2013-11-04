@@ -15,10 +15,12 @@ bool MessageManager::init(){
 }
 
 bool MessageManager::ProcessMessage(Message& msg){
+    bool result = false;
+
     if(msg.message().size() > 0){
         Message::MessageData msgData = msg.message().Get(0);
         if(msgData.type() == Message::CONNECT){
-            return login->ProcessMessage(msgData.data());
+            result = login->processMessage(msgData.data());
         }else{
             std::cout << "Message type not handled yet." << std::endl;
         }
@@ -26,5 +28,5 @@ bool MessageManager::ProcessMessage(Message& msg){
         std::cout << "Not enough parameters" << std::endl;
     }
 
-    return false;
+    return result;
 }

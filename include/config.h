@@ -7,5 +7,6 @@
 #define MYSQL_USER "root"
 #define MYSQL_PASS ""
 #define MYSQL_DB "exploot"
+#define MYSQL_HASH "exploot 0.0.1"
 
 #endif

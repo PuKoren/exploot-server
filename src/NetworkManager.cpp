@@ -41,7 +41,8 @@ void NetworkManager::update(){
             cout << "A new client connected from " << event.peer->address.host << ":" << event.peer -> address.port << endl;
         }else if(event.type == ENET_EVENT_TYPE_RECEIVE){
             Message msg;
-            if(msg.ParseFromString((char*)event.packet->data)){
+            msg.ParseFromString((char*)event.packet->data);
+            if(msg.message().size() > 0){
                 msgManager->ProcessMessage(msg);
             }
             /* Clean up the packet now that we're done using it. */
