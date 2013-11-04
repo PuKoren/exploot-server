@@ -1,13 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\submodules\exploot-protobuf\build\Message.pb.cc">
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Database.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\submodules\exploot-protobuf\build\Connect.pb.cc">
-      <Filter>src</Filter>
+      <Filter>protobuf</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\main.cpp">
+    <ClCompile Include="..\submodules\exploot-protobuf\build\Message.pb.cc">
+      <Filter>protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\Login.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -18,24 +24,30 @@
     <Filter Include="include">
       <UniqueIdentifier>{74e7a2bf-fe49-4e68-a4ea-0f840632bccd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="protobuf">
+      <UniqueIdentifier>{3af25105-5eb2-4537-bdaa-7286e45d8e7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="sql">
+      <UniqueIdentifier>{840a7f09-56b8-405d-9748-73c66d70313d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\config.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\submodules\exploot-protobuf\build\Connect.pb.h">
+    <ClInclude Include="..\include\Database.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\submodules\exploot-protobuf\build\Message.pb.h">
+    <ClInclude Include="..\include\Login.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\submodules\exploot-protobuf\Connect.proto">
-      <Filter>include</Filter>
+      <Filter>protobuf</Filter>
     </None>
     <None Include="..\submodules\exploot-protobuf\Message.proto">
-      <Filter>include</Filter>
+      <Filter>protobuf</Filter>
     </None>
   </ItemGroup>
 </Project>

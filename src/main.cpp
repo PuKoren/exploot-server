@@ -3,6 +3,8 @@
 #include "exploot-protobuf/build/Message.pb.h"
 #include "exploot-protobuf/build/Connect.pb.h"
 #include "config.h"
+#include "Database.h"
+#include "Login.h"
 
 using namespace std;
 
@@ -27,15 +29,13 @@ int main(int argc, char** argv){
 
     std::cout << "Listening on port " << UDP_PORT << "..." << std::endl;
     ENetEvent event;
+    Database db;
     /* Wait up to 1000 milliseconds for an event. */
     while (enet_host_service (server, &event, 1000) >= 0)
     {
         
-        if(event.type == ENET_EVENT_TYPE_CONNECT)
-        {
-            cout << "A new client connected from "
-                 << event.peer->address.host << ":"
-                 << event.peer -> address.port << endl;
+        if(event.type == ENET_EVENT_TYPE_CONNECT){
+            cout << "A new client connected from " << event.peer->address.host << ":" << event.peer -> address.port << endl;
         }else if(event.type == ENET_EVENT_TYPE_RECEIVE){
             Message msg;
             msg.ParseFromString((char*)event.packet->data);
@@ -45,6 +45,8 @@ int main(int argc, char** argv){
                     Connect con;
                     if(con.ParseFromString(msgData.data())){
                         std::cout << "User " << con.nickname() << " tries to log in with password " << con.passhash() << std::endl; 
+                        Login log(db.getConnection());
+                        log.Create(con.nickname().c_str(), con.passhash().c_str());
                     }else{
                         std::cout << "Invalid message data string" << std::endl;
                     }
@@ -57,9 +59,9 @@ int main(int argc, char** argv){
             /* Clean up the packet now that we're done using it. */
             enet_packet_destroy (event.packet);
         }else if(event.type == ENET_EVENT_TYPE_DISCONNECT){
-            cout << event.peer -> data << " disconected." << endl;
+            cout << event.peer->address.host << " disconected." << endl;
             /* Reset the peer's client information. */
-            event.peer -> data = NULL;
+            event.peer->data = NULL;
         }
     }
 
