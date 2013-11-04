@@ -26,10 +26,10 @@ bool DatabaseManager::init(){
         delete statement;
         if(con){
             delete con;
-        }else{
-            con = NULL;
         }
-        std::cout << "failed to initialize DatabaseManager. Check MySQL install." << std::endl;
+        con = NULL;
+        std::cout << "MySQL Error: " << ex.getErrorCode() << std::endl;
+        std::cout << "Failed to initialize DatabaseManager. Check MySQL install or server config.h" << std::endl;
         return false;
     }
 }
