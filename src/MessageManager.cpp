@@ -14,13 +14,13 @@ bool MessageManager::init(){
     return true;
 }
 
-bool MessageManager::ProcessMessage(Message& msg){
+bool MessageManager::ProcessMessage(Message& msg, ENetPeer* peer){
     bool result = false;
 
     if(msg.message().size() > 0){
         Message::MessageData msgData = msg.message().Get(0);
         if(msgData.type() == Message::CONNECT){
-            result = login->processMessage(msgData.data());
+            result = login->processMessage(msgData.data(), *((std::string*)peer->data));
         }else{
             std::cout << "Message type not handled yet." << std::endl;
         }

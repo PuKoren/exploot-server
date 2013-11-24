@@ -91,5 +91,6 @@ private:
  
 std::string md5(const std::string str);
 std::string hash(const char* str);
+std::string getRandomString();
  
 #endif

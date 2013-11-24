@@ -13,7 +13,6 @@ int main(int argc, char** argv){
     DatabaseManager* dbManager = new DatabaseManager();
     MessageManager* msgManager = new MessageManager(dbManager);
     NetworkManager* netManager = new NetworkManager(msgManager);
-
     signal(SIGINT, intHandler);
 
     if(dbManager->init() && netManager->init() && msgManager->init()){

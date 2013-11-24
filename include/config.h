@@ -5,7 +5,7 @@
 
 #define MYSQL_ADDR "tcp://127.0.0.1:3306"
 #define MYSQL_USER "root"
-#define MYSQL_PASS ""
+#define MYSQL_PASS "abcd4321"
 #define MYSQL_DB "exploot"
 #define MYSQL_HASH "exploot 0.0.1"
 

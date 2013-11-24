@@ -33,23 +33,36 @@ bool NetworkManager::init(){
     return true;
 }
 
+void NetworkManager::sendMessage(ENetPeer* peer, const char* message){
+    ENetPacket * packet = enet_packet_create(message, strlen(message) + 1, ENET_PACKET_FLAG_RELIABLE);
+    enet_peer_send (peer, 0, packet);
+}
+
 void NetworkManager::update(){
     ENetEvent event;
     while (enet_host_service (server, &event, 10) >= 0)
     { 
         if(event.type == ENET_EVENT_TYPE_CONNECT){
             cout << "A new client connected from " << event.peer->address.host << ":" << event.peer -> address.port << endl;
+            Message msg;
+            Message::MessageData* msgData = msg.add_message();
+            msgData->set_type(Message::CHALLENGE);
+            event.peer->data = new string;
+            *((string*)event.peer->data) = getRandomString();
+            msgData->set_data(*(string*)event.peer->data);
+            sendMessage(event.peer, msg.SerializeAsString().c_str());
         }else if(event.type == ENET_EVENT_TYPE_RECEIVE){
             Message msg;
             msg.ParseFromString((char*)event.packet->data);
             if(msg.message().size() > 0){
-                msgManager->ProcessMessage(msg);
+                msgManager->ProcessMessage(msg, event.peer);
             }
             /* Clean up the packet now that we're done using it. */
             enet_packet_destroy (event.packet);
         }else if(event.type == ENET_EVENT_TYPE_DISCONNECT){
             cout << event.peer->address.host << " disconected." << endl;
             /* Reset the peer's client information. */
+            delete (string*)event.peer->data;
             event.peer->data = NULL;
         }
     }

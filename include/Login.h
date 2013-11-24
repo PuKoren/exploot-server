@@ -12,8 +12,8 @@ public:
     Login(sql::Connection*);
     ~Login();
     bool create(const char* uname, const char* upass);
-    bool login(const char* uname, const char* upass);
-    bool processMessage(const std::string &str);
+    bool login(const char* uname, const char* upass, std::string uhash);
+    bool processMessage(const std::string &str, std::string challenge = "");
 private:
     sql::Connection *con;
     bool exists(const char* uname);

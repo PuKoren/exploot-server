@@ -35,6 +35,10 @@ documentation and/or software.
  
 /* system implementation headers */
 #include <cstdio>
+#include <string>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
  
  
 // Constants for MD5Transform routine.
@@ -365,4 +369,21 @@ std::string hash(const char* str){
     std::string hashed(str);
     hashed.append(MYSQL_HASH);
     return md5(hashed);
+}
+
+static const char alphanum[] =
+"0123456789"
+"!@#$%^&*"
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+"abcdefghijklmnopqrstuvwxyz";
+int stringLength = sizeof(alphanum) - 1;
+
+std::string getRandomString(){
+    srand(time(0));
+    std::string str;
+    for(unsigned int i = 0; i < 20; ++i)
+    {
+        str += alphanum[rand() % stringLength];
+    }
+    return str;
 }
