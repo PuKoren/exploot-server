@@ -60,7 +60,7 @@ void NetworkManager::update(){
 			
         }else if(event.type == ENET_EVENT_TYPE_RECEIVE){
             Message msg;
-            msg.ParseFromString((char*)event.packet->data);
+            msg.ParseFromArray(event.packet->data, event.packet->dataLength);
             if(msg.message().size() > 0){
 				std::string return_value;
 				Message_MessageType return_type;

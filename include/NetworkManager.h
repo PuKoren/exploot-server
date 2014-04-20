@@ -2,7 +2,6 @@
 #include <iostream>
 #include <vector>
 #include <enet/enet.h>
-#include <sstream>
 #include "md5.h"
 #include "config.h"
 #include "MessageManager.h"
