@@ -376,10 +376,10 @@ static const char alphanum[] =
 "!@#$%^&*"
 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 "abcdefghijklmnopqrstuvwxyz";
-int stringLength = sizeof(alphanum) - 1;
+const int stringLength = sizeof(alphanum) - 1;
 
 std::string getRandomString(){
-    srand(time(0));
+    srand(time(NULL));
     std::string str;
     for(unsigned int i = 0; i < 20; ++i)
     {

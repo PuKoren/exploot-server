@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <enet/enet.h>
+#include <sstream>
 #include "md5.h"
 #include "config.h"
 #include "MessageManager.h"
@@ -13,7 +14,7 @@ class NetworkManager{
 public:
     NetworkManager(MessageManager*);
     ~NetworkManager();
-    void sendMessage(ENetPeer* peer, const char* message);
+    void sendMessage(ENetPeer* peer, Message& message);
     string getChallenge(int connectID);
     void update();
     bool init();

@@ -33,9 +33,15 @@ bool NetworkManager::init(){
     return true;
 }
 
-void NetworkManager::sendMessage(ENetPeer* peer, const char* message){
-    ENetPacket * packet = enet_packet_create(message, strlen(message) + 1, ENET_PACKET_FLAG_RELIABLE);
+void NetworkManager::sendMessage(ENetPeer* peer, Message& message){	
+	void* data = malloc(message.ByteSize());
+	int size = message.ByteSize();
+	message.SerializeToArray(data, size);
+	
+    ENetPacket* packet = enet_packet_create(data, size, ENET_PACKET_FLAG_RELIABLE);
     enet_peer_send (peer, 0, packet);
+	
+	free(data);
 }
 
 void NetworkManager::update(){
@@ -50,7 +56,8 @@ void NetworkManager::update(){
             event.peer->data = new string;
             *((string*)event.peer->data) = getRandomString();
             msgData->set_data(*(string*)event.peer->data);
-            sendMessage(event.peer, msg.SerializeAsString().c_str());
+            sendMessage(event.peer, msg);
+			
         }else if(event.type == ENET_EVENT_TYPE_RECEIVE){
             Message msg;
             msg.ParseFromString((char*)event.packet->data);
@@ -62,7 +69,8 @@ void NetworkManager::update(){
 					Message::MessageData* msgData = msg.add_message();
 					msgData->set_type(return_type);
 					msgData->set_data(return_value);
-					sendMessage(event.peer, msg.SerializeAsString().c_str());
+					
+					sendMessage(event.peer, msg);
 				}
             }
         }else if(event.type == ENET_EVENT_TYPE_DISCONNECT){
