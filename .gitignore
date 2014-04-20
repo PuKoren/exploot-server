@@ -6,3 +6,6 @@ exploot-server.opensdf
 exploot-server.sdf
 exploot-server.v11.suo
 visual-studio/tmp/*
+
+#CMakeFiles
+CMakeLists.txt.user
