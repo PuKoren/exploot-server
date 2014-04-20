@@ -4,12 +4,6 @@
     <ClCompile Include="..\src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\submodules\exploot-protobuf\build\Connect.pb.cc">
-      <Filter>protobuf</Filter>
-    </ClCompile>
-    <ClCompile Include="..\submodules\exploot-protobuf\build\Message.pb.cc">
-      <Filter>protobuf</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\NetworkManager.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -25,6 +19,15 @@
     <ClCompile Include="..\src\md5.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\submodules\exploot-protobuf\build\Connect.callback.pb.cc">
+      <Filter>src\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\submodules\exploot-protobuf\build\Connect.pb.cc">
+      <Filter>src\protobuf</Filter>
+    </ClCompile>
+    <ClCompile Include="..\submodules\exploot-protobuf\build\Message.pb.cc">
+      <Filter>src\protobuf</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -38,6 +41,12 @@
     </Filter>
     <Filter Include="sql">
       <UniqueIdentifier>{840a7f09-56b8-405d-9748-73c66d70313d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\protobuf">
+      <UniqueIdentifier>{724d62c1-aeb5-4a05-afdb-0f8ae76e0884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\protobuf">
+      <UniqueIdentifier>{309d3061-4be9-4dd9-884a-143fcadf0e9a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +68,15 @@
     <ClInclude Include="..\include\md5.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\submodules\exploot-protobuf\build\Connect.callback.pb.h">
+      <Filter>include\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\submodules\exploot-protobuf\build\Connect.pb.h">
+      <Filter>include\protobuf</Filter>
+    </ClInclude>
+    <ClInclude Include="..\submodules\exploot-protobuf\build\Message.pb.h">
+      <Filter>include\protobuf</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\submodules\exploot-protobuf\Connect.proto">
@@ -66,6 +84,12 @@
     </None>
     <None Include="..\submodules\exploot-protobuf\Message.proto">
       <Filter>protobuf</Filter>
+    </None>
+    <None Include="..\submodules\exploot-protobuf\Connect.callback.proto">
+      <Filter>protobuf</Filter>
+    </None>
+    <None Include="..\sql\login.sql">
+      <Filter>sql</Filter>
     </None>
   </ItemGroup>
 </Project>

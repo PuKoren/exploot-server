@@ -14,13 +14,17 @@ bool MessageManager::init(){
     return true;
 }
 
-bool MessageManager::ProcessMessage(Message& msg, ENetPeer* peer){
+bool MessageManager::ProcessMessage(Message& msg, ENetPeer* peer, std::string& return_value, Message_MessageType &return_type){
     bool result = false;
 
     if(msg.message().size() > 0){
         Message::MessageData msgData = msg.message().Get(0);
         if(msgData.type() == Message::CONNECT){
-            result = login->processMessage(msgData.data(), *((std::string*)peer->data));
+			result = true;
+			return_type = Message::LOGIN_CALLBACK;
+			ConnectCallback cb;
+			cb.set_succeed(login->processMessage(msgData.data(), *((std::string*)peer->data)));
+			return_value = cb.SerializeAsString();
         }else{
             std::cout << "Message type not handled yet." << std::endl;
         }

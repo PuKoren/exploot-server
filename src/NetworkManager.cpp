@@ -55,7 +55,15 @@ void NetworkManager::update(){
             Message msg;
             msg.ParseFromString((char*)event.packet->data);
             if(msg.message().size() > 0){
-                msgManager->ProcessMessage(msg, event.peer);
+				std::string return_value;
+				Message_MessageType return_type;
+                if(msgManager->ProcessMessage(msg, event.peer, return_value, return_type)){
+					msg = Message();
+					Message::MessageData* msgData = msg.add_message();
+					msgData->set_type(return_type);
+					msgData->set_data(return_value);
+					sendMessage(event.peer, msg.SerializeAsString().c_str());
+				}
             }
             /* Clean up the packet now that we're done using it. */
             enet_packet_destroy (event.packet);

@@ -63,6 +63,9 @@
       <AdditionalLibraryDirectories>lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>mysqlcppconn.lib;libprotobuf.lib;ws2_32.lib;winmm.lib;enet.lib;BulletCollision.lib;BulletDynamics.lib;BulletSoftBody.lib;LinearMath.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PreBuildEvent>
+      <Command>copy bin\*.dll ..\build</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -88,6 +91,7 @@
     <ClCompile Include="..\src\md5.cpp" />
     <ClCompile Include="..\src\MessageManager.cpp" />
     <ClCompile Include="..\src\NetworkManager.cpp" />
+    <ClCompile Include="..\submodules\exploot-protobuf\build\Connect.callback.pb.cc" />
     <ClCompile Include="..\submodules\exploot-protobuf\build\Connect.pb.cc" />
     <ClCompile Include="..\submodules\exploot-protobuf\build\Message.pb.cc" />
   </ItemGroup>
@@ -98,8 +102,13 @@
     <ClInclude Include="..\include\md5.h" />
     <ClInclude Include="..\include\MessageManager.h" />
     <ClInclude Include="..\include\NetworkManager.h" />
+    <ClInclude Include="..\submodules\exploot-protobuf\build\Connect.callback.pb.h" />
+    <ClInclude Include="..\submodules\exploot-protobuf\build\Connect.pb.h" />
+    <ClInclude Include="..\submodules\exploot-protobuf\build\Message.pb.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\sql\login.sql" />
+    <None Include="..\submodules\exploot-protobuf\Connect.callback.proto" />
     <None Include="..\submodules\exploot-protobuf\Connect.proto" />
     <None Include="..\submodules\exploot-protobuf\Message.proto" />
   </ItemGroup>

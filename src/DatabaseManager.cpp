@@ -2,11 +2,15 @@
 
 DatabaseManager::DatabaseManager(){
     std::cout << "Created database manager." << std::endl;
+	con = NULL;
+	driver = NULL;
 }
 
 DatabaseManager::~DatabaseManager(){
     std::cout << "Destroying database manager." << std::endl;
+	if(con) con->close();
     delete con;
+	delete driver;
 }
 
 bool DatabaseManager::init(){
