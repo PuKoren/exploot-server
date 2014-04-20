@@ -23,7 +23,7 @@ public:
 	* @return_type (Message_MessageType) contains the protobuf type returned
 	* returns true or false (true => message in return_value must be sent back to user)
 	*/
-	bool ProcessMessage(Message&, ENetPeer* peer, std::string& return_value, Message_MessageType &);
+	bool ProcessMessage(Message&, ENetPeer* peer, Message::MessageType &type, std::string& data);
     bool init();
 private:
     DatabaseManager* dbManager;

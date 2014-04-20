@@ -57,7 +57,7 @@ void NetworkManager::update(){
             if(msg.message().size() > 0){
 				std::string return_value;
 				Message_MessageType return_type;
-                if(msgManager->ProcessMessage(msg, event.peer, return_value, return_type)){
+                if(msgManager->ProcessMessage(msg, event.peer, return_type, return_value)){
 					msg = Message();
 					Message::MessageData* msgData = msg.add_message();
 					msgData->set_type(return_type);
@@ -65,13 +65,13 @@ void NetworkManager::update(){
 					sendMessage(event.peer, msg.SerializeAsString().c_str());
 				}
             }
-            /* Clean up the packet now that we're done using it. */
-            enet_packet_destroy (event.packet);
         }else if(event.type == ENET_EVENT_TYPE_DISCONNECT){
             cout << event.peer->address.host << " disconected." << endl;
             /* Reset the peer's client information. */
             delete (string*)event.peer->data;
             event.peer->data = NULL;
         }
+		/* Clean up the packet now that we're done using it. */
+        enet_packet_destroy (event.packet);
     }
 }
