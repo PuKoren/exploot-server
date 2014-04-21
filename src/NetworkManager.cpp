@@ -2,12 +2,11 @@
 
 NetworkManager::NetworkManager(MessageManager* msg){
     msgManager = msg;
-    std::cout << "Created network manager." << std::endl;
+	server = NULL;
 }
 
 NetworkManager::~NetworkManager(){
-    std::cout << "Destroying network manager." << std::endl;
-    enet_host_destroy(server);
+	if(server) enet_host_destroy(server);
     enet_deinitialize();
 }
 

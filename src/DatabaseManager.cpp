@@ -1,22 +1,20 @@
 #include "DatabaseManager.h"
 
 DatabaseManager::DatabaseManager(){
-    std::cout << "Created database manager." << std::endl;
 	con = NULL;
 	driver = NULL;
 }
 
 DatabaseManager::~DatabaseManager(){
-    std::cout << "Destroying database manager." << std::endl;
 	if(con) con->close();
-    delete con;
-	delete driver;
+	delete con;
 }
 
 bool DatabaseManager::init(){
     sql::Statement* statement = NULL;
     try{
         driver = sql::mysql::get_mysql_driver_instance();
+		if(driver == NULL) throw sql::SQLException("Null driver instance returned.");
         con = driver->connect(MYSQL_ADDR, MYSQL_USER, MYSQL_PASS);
 
         std::cout << "Connected to MySQL server: " << MYSQL_ADDR << std::endl;
@@ -26,14 +24,10 @@ bool DatabaseManager::init(){
         std::cout << "Selected database: exploot" << std::endl;
         delete statement;
         return true;
-    }catch(sql::SQLException ex){
-        delete statement;
-        if(con){
-            delete con;
-        }
-        con = NULL;
-        std::cout << "MySQL Error: " << ex.getErrorCode() << std::endl;
+    }catch(sql::SQLException& ex){
+		std::cout << "MySQL Error: " << ex.getErrorCode() << std::endl;
         std::cout << "Failed to initialize DatabaseManager. Check MySQL install or server config.h" << std::endl;
+        delete statement;
         return false;
     }
 }
