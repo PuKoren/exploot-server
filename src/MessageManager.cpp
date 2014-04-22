@@ -21,7 +21,7 @@ bool MessageManager::ProcessMessage(Message& msg, ENetPeer* peer, Message::Messa
         Message::MessageData msgData = msg.message().Get(0);
         if(msgData.type() == Message::CONNECT){
 			ConnectCallback cb;
-			cb.set_succeed(login->processMessage(msgData.data(), *((std::string*)peer->data)));
+			cb.set_succeed(login->processMessage(msgData.data(), peer));
 			result = true;
 			type = Message::LOGIN_CALLBACK;
 			data = cb.SerializeAsString();
