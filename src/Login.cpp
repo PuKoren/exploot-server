@@ -48,7 +48,7 @@ bool Login::create(const char* uname, const char* upass){
     return result;
 }
 
-bool Login::login(const char* uname,  const char* upass, ENetPeer* peer){
+bool Login::login(const char* uname,  const char* upass, Player* pPlayer){
     sql::PreparedStatement  *prep_stmt = NULL;
     sql::ResultSet* res = NULL;
     bool result = false;
@@ -58,11 +58,11 @@ bool Login::login(const char* uname,  const char* upass, ENetPeer* peer){
         res =  prep_stmt->executeQuery();
         if(res->next()){
             std::string retrievedPassword = res->getString("login_pass"); // also, should handle case where Password length > PASSWORD_LENGTH
-            retrievedPassword.append(*((std::string*)peer->data));
+            retrievedPassword.append(pPlayer->getChallenge());
 
             if(md5(retrievedPassword).compare(upass) == 0){
                 result = true;
-				*(int*)peer->data = res->getInt("login_id");
+				pPlayer->setId(res->getInt("login_id"));
                 std::cout << "User '" << uname << "' logged in." << std::endl;
             }else{
                 result = false;
@@ -80,14 +80,14 @@ bool Login::login(const char* uname,  const char* upass, ENetPeer* peer){
     return result;
 }
 
-bool Login::processMessage(const std::string &str,  ENetPeer* peer){
+bool Login::processMessage(const std::string &str,  Player* pPlayer){
     Connect con;
     bool result = false;
     if(con.ParseFromString(str)){
         /*if(!exists(con.nickname().c_str())){
             result = create(con.nickname().c_str(), con.passhash().c_str());
         }else{*/
-        result = login(con.nickname().c_str(), con.passhash().c_str(), peer);
+        result = login(con.nickname().c_str(), con.passhash().c_str(), pPlayer);
         //}
     }else{
         std::cout << "Bad protobuf received" << std::endl;

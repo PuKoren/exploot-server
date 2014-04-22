@@ -52,9 +52,9 @@ void NetworkManager::update(){
             Message msg;
             Message::MessageData* msgData = msg.add_message();
             msgData->set_type(Message::CHALLENGE);
-            event.peer->data = new string;
-            *((string*)event.peer->data) = getRandomString();
-            msgData->set_data(*(string*)event.peer->data);
+            event.peer->data = new Player();
+            ((Player*)event.peer->data)->setChallenge(getRandomString());
+            msgData->set_data(((Player*)event.peer->data)->getChallenge());
             sendMessage(event.peer, msg);
 			
         }else if(event.type == ENET_EVENT_TYPE_RECEIVE){
@@ -73,9 +73,9 @@ void NetworkManager::update(){
 				}
             }
         }else if(event.type == ENET_EVENT_TYPE_DISCONNECT){
-            cout << event.peer->address.host << " disconected." << endl;
+            cout << event.peer->address.host << " disconnected." << endl;
             /* Reset the peer's client information. */
-            delete (string*)event.peer->data;
+            delete (Player*)event.peer->data;
             event.peer->data = NULL;
         }
 		/* Clean up the packet now that we're done using it. */

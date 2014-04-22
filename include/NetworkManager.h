@@ -2,9 +2,11 @@
 #include <iostream>
 #include <vector>
 #include <enet/enet.h>
+
 #include "md5.h"
 #include "config.h"
 #include "MessageManager.h"
+#include "Player.h"
 #include "exploot-protobuf/build/Message.pb.h"
 
 using namespace std;

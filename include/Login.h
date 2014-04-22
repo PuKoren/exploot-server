@@ -6,6 +6,7 @@
 #include <cppconn/prepared_statement.h>
 #include <cppconn/exception.h>
 #include "md5.h"
+#include "Player.h"
 #include "exploot-protobuf/build/Connect.pb.h"
 
 class Login{
@@ -13,8 +14,8 @@ public:
     Login(sql::Connection*);
     ~Login();
     bool create(const char* uname, const char* upass);
-    bool login(const char* uname, const char* upass, ENetPeer* uhash);
-    bool processMessage(const std::string &str, ENetPeer* peer);
+    bool login(const char* uname, const char* upass, Player* pPlayer);
+    bool processMessage(const std::string &str, Player* pPlayer);
 private:
     sql::Connection *con;
     bool exists(const char* uname);
