@@ -45,6 +45,8 @@ bool Character::processMessage(const std::string &str, Player *pPlayer, std::str
             getCharacterList(pPlayer, msg);
             data = msg.SerializeAsString();
             break;
+        default:
+            break;
     }
 
     return true;

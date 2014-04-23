@@ -23,10 +23,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `character`
+-- Table structure for table `characters`
 --
 
-CREATE TABLE IF NOT EXISTS `character` (
+CREATE TABLE IF NOT EXISTS `characters` (
   `character_id` int(11) NOT NULL AUTO_INCREMENT,
   `login_id` int(11) NOT NULL,
   `character_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
