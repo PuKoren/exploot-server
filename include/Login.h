@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <enet/enet.h>
 #include <mysql_driver.h>
 #include <cppconn/statement.h>
 #include <cppconn/prepared_statement.h>

@@ -4,6 +4,7 @@
 #include "exploot-protobuf/build/Connect.pb.h"
 #include "exploot-protobuf/build/Connect.callback.pb.h"
 #include "Login.h"
+#include "Character.h"
 #include "DatabaseManager.h"
 
 /**
@@ -23,9 +24,10 @@ public:
 	* @return_type (Message_MessageType) contains the protobuf type returned
 	* returns true or false (true => message in return_value must be sent back to user)
 	*/
-	bool ProcessMessage(Message&, ENetPeer* peer, Message::MessageType &type, std::string& data);
+    bool ProcessMessage(Message&, ENetPeer* peer, Message::MessageType &type, std::string &data);
     bool init();
 private:
     DatabaseManager* dbManager;
     Login* login;
+    Character* mChar;
 };

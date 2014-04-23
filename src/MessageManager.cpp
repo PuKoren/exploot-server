@@ -11,6 +11,7 @@ MessageManager::~MessageManager(){
 
 bool MessageManager::init(){
     login = new Login(dbManager->getConnection());
+    mChar = new Character(dbManager->getConnection());
     return true;
 }
 
@@ -25,6 +26,9 @@ bool MessageManager::ProcessMessage(Message& msg, ENetPeer* peer, Message::Messa
 			result = true;
 			type = Message::LOGIN_CALLBACK;
 			data = cb.SerializeAsString();
+        }else if(msgData.type() == Message::CHARACTER){
+            type = Message::CHARACTER;
+            result = mChar->processMessage(msgData.data(), (Player*)peer->data, data);
         }else{
             std::cout << "Message type not handled yet." << std::endl;
         }
