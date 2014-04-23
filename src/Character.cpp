@@ -8,18 +8,21 @@ Character::~Character(){
 
 }
 
-std::vector<chara> Character::getCharacterList(Player *pPlayer){
+void Character::getCharacterList(Player *pPlayer, Characters& message){
     sql::PreparedStatement  *prep_stmt = NULL;
     sql::ResultSet* res = NULL;
-    std::vector<chara> result;
 
     try{
-        prep_stmt = mConn->prepareStatement("SELECT character_id, character_name FROM characters WHERE login_id = ?");
+        prep_stmt = mConn->prepareStatement("SELECT character_id, character_name, character_level FROM characters WHERE login_id = ?");
         prep_stmt->setInt(1, pPlayer->getId());
         res =  prep_stmt->executeQuery();
 
         if(res->next()){
-            result.push_back({res->getInt("character_id"), res->getString("character_name")});
+            Characters_CharList* charList = message.add_characterlist();
+            charList->set_char_id(res->getInt("character_id"));
+            charList->set_char_name(res->getString("character_name"));
+            charList->set_char_level(res->getInt("character_level"));
+            //result.push_back({res->getInt("character_id"), res->getString("character_name")});
         }
 
         delete res;
@@ -29,20 +32,18 @@ std::vector<chara> Character::getCharacterList(Player *pPlayer){
     }
 
     delete prep_stmt;
-    return result;
 }
 
 bool Character::processMessage(const std::string &str, Player *pPlayer, std::string &data){
     Characters message;
     message.ParseFromString(str);
 
+    Characters msg;
     switch(message.type()){
         case Characters::LIST:
-            //std::vector<chara> char_list = getCharacterList(pPlayer);
-            data = "";
-            break;
-        default:
-            data = "";
+            msg.set_type(Characters::LIST_CB);
+            getCharacterList(pPlayer, msg);
+            data = msg.SerializeAsString();
             break;
     }
 

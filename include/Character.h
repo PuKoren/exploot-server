@@ -19,7 +19,7 @@ public:
     Character(sql::Connection* pConn);
     ~Character();
 
-    std::vector<chara> getCharacterList(Player* pPlayer);
+    void getCharacterList(Player* pPlayer, Characters& message);
     bool processMessage(const std::string &str, Player* pPlayer, std::string &data);
 private:
     sql::Connection *mConn;

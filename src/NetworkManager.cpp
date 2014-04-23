@@ -68,7 +68,6 @@ void NetworkManager::update(){
 					Message::MessageData* msgData = msg.add_message();
 					msgData->set_type(return_type);
 					msgData->set_data(return_value);
-					
 					sendMessage(event.peer, msg);
 				}
             }
