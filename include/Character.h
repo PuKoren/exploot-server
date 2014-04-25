@@ -19,6 +19,7 @@ public:
     Character(sql::Connection* pConn);
     ~Character();
 
+    bool createCharacter(Player* pPlayer, Characters& message, Characters& cbMsg);
     void getCharacterList(Player* pPlayer, Characters& message);
     bool processMessage(const std::string &str, Player* pPlayer, std::string &data);
 private:

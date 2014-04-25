@@ -8,6 +8,57 @@ Character::~Character(){
 
 }
 
+bool Character::createCharacter(Player *pPlayer, Characters &message, Characters &cbMsg){
+    if(message.createdata().char_name().size() == 0) return false;
+    if(message.createdata().char_name().size() > 32) return false;
+
+    sql::PreparedStatement  *prep_stmt = NULL;
+    sql::ResultSet* res = NULL;
+
+    Characters_CharCreate* creation = cbMsg.mutable_createdata();
+    creation->set_char_id(0);
+    creation->set_char_name(message.createdata().char_name());
+    creation->set_created(false);
+
+    try{
+        prep_stmt = mConn->prepareStatement("SELECT character_id FROM characters WHERE character_name = ?");
+        prep_stmt->setString(1, message.createdata().char_name());
+        res = prep_stmt->executeQuery();
+        delete prep_stmt;
+        if(res->next()){
+            delete res;
+            return false;
+        }
+        delete res;
+
+        prep_stmt = mConn->prepareStatement("INSERT INTO characters(login_id, character_name) VALUES(?, ?)");
+        prep_stmt->setInt(1, pPlayer->getId());
+        prep_stmt->setString(2, message.createdata().char_name());
+        //res = prep_stmt->executeQuery("SELECT mysql_last_insert_id() as id");
+        if(prep_stmt->executeUpdate() > 0){
+            std::cout << "Character '" << message.createdata().char_name() << "' created." << std::endl;
+            delete prep_stmt;
+            prep_stmt = mConn->prepareStatement("SELECT LAST_INSERT_ID()");
+            res = prep_stmt->executeQuery();
+            if(res->next()){
+                creation->set_created(true);
+                creation->set_char_id(res->getInt("LAST_INSERT_ID()"));
+            }
+        }else{
+            std::cout << "Character " << message.createdata().char_name() << " already exists." << std::endl;
+        }
+
+        delete res;
+        return true;
+    }catch(sql::SQLException ex){
+        std::cout << "SQL Error: " << ex.getErrorCode() << std::endl;
+    }
+
+    delete res;
+    delete prep_stmt;
+    return false;
+}
+
 void Character::getCharacterList(Player *pPlayer, Characters& message){
     sql::PreparedStatement  *prep_stmt = NULL;
     sql::ResultSet* res = NULL;
@@ -17,7 +68,7 @@ void Character::getCharacterList(Player *pPlayer, Characters& message){
         prep_stmt->setInt(1, pPlayer->getId());
         res =  prep_stmt->executeQuery();
 
-        if(res->next()){
+        while(res->next()){
             Characters_CharList* charList = message.add_characterlist();
             charList->set_char_id(res->getInt("character_id"));
             charList->set_char_name(res->getString("character_name"));
@@ -27,7 +78,6 @@ void Character::getCharacterList(Player *pPlayer, Characters& message){
 
         delete res;
     }catch(sql::SQLException ex){
-        if(prep_stmt) delete prep_stmt;
         std::cout << "SQL Error: " << ex.getErrorCode() << std::endl;
     }
 
@@ -43,6 +93,11 @@ bool Character::processMessage(const std::string &str, Player *pPlayer, std::str
         case Characters::LIST:
             msg.set_type(Characters::LIST_CB);
             getCharacterList(pPlayer, msg);
+            data = msg.SerializeAsString();
+            break;
+        case Characters::CREATE:
+            msg.set_type(Characters::CREATE_CB);
+            createCharacter(pPlayer, message, msg);
             data = msg.SerializeAsString();
             break;
         default:
