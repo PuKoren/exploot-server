@@ -1,3 +1,3 @@
 [submodule "submodules/exploot-protobuf"]
 	path = submodules/exploot-protobuf
-	url = https://pukoren@bitbucket.org/pukoren/exploot-protobuf.git
+	url = https://github.com/Pukogames/exploot-protobuf.git
