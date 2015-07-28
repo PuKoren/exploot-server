@@ -3,10 +3,6 @@ exploot-server
 
 The Exploot MMO game server
 
-
-## Dependencies
-Google protobuf C library headers, you can install it on Arch Linux using ```pacman -S protobuf-c```
-
 ## Submodules
 Clone repo and then run ```git submodule update --init``` to fetch latest version of exploot-protobuf.  
 Then go to the ```submodules/exploot-protobuf``` folder and run ```build.sh```
@@ -14,7 +10,7 @@ Then go to the ```submodules/exploot-protobuf``` folder and run ```build.sh```
 ## Dependencies
 ### Arch Linux
 ```bash
-  pacman -S mysql-connector-c++ bullet enet
+  pacman -S mysql-connector-c++ bullet enet protobuf-c
 ```
 
 ### Windows
